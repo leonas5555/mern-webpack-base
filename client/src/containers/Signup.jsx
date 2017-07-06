@@ -53,48 +53,6 @@ class SignUpPage extends React.Component {
         errors,
       });
     });
- /*   axios.post('/auth/signup', {
-      firstName: 'Fred',
-      lastName: 'Flintstone',
-    })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });*/
-
-    // create an AJAX request
-    /* const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/signup');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
-        this.setState({
-          errors: {},
-        });
-
-        // set a message
-        localStorage.setItem('successMessage', xhr.response.message);
-
-        // make a redirect
-        this.context.router.replace('/login');
-      } else {
-        // failure
-
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
-
-        this.setState({
-          errors,
-        });
-      }
-    });
-    xhr.send(formData);*/
   }
 
   changeUser(event) {
