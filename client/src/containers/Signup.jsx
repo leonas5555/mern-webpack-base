@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import SignUpForm from '../components/Signup.jsx';
-
+import axios from 'axios';
 
 class SignUpPage extends React.Component {
 
@@ -22,7 +22,6 @@ class SignUpPage extends React.Component {
   }
 
   processForm(event) {
-
     event.preventDefault();
 
     const name = encodeURIComponent(this.state.user.name);
@@ -30,8 +29,43 @@ class SignUpPage extends React.Component {
     const password = encodeURIComponent(this.state.user.password);
     const formData = `name=${name}&email=${email}&password=${password}`;
 
+    axios({
+      method: 'post',
+      url: '/auth/signup',
+      data: formData,
+      responseType: 'json',
+      headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+
+    })
+    .then((response) => {
+      this.setState({
+        errors: {},
+      });
+      localStorage.setItem('successMessage', response.message);
+
+        // make a redirect
+      this.context.router.replace('/login');
+    }).catch((error) => {
+      const errors = error.response.errors ? error.response.errors : {};
+      errors.summary = error.response.message;
+
+      this.setState({
+        errors,
+      });
+    });
+ /*   axios.post('/auth/signup', {
+      firstName: 'Fred',
+      lastName: 'Flintstone',
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });*/
+
     // create an AJAX request
-    const xhr = new XMLHttpRequest();
+    /* const xhr = new XMLHttpRequest();
     xhr.open('post', '/auth/signup');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
@@ -60,7 +94,7 @@ class SignUpPage extends React.Component {
         });
       }
     });
-    xhr.send(formData);
+    xhr.send(formData);*/
   }
 
   changeUser(event) {

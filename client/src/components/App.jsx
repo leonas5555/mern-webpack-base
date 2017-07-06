@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router';
+import Auth from '../modules/Auth';
 
 export default class App extends React.Component {
 
@@ -32,7 +34,7 @@ export default class App extends React.Component {
         <AppBar
           title="App"
           onLeftIconButtonTouchTap={this.handleOptionsButtonClick}
-          iconElementRight={<Link to="/login">Log in</Link>}
+          iconElementRight={<LoginButton />}
         />
 
         {this.props.children}
@@ -41,7 +43,26 @@ export default class App extends React.Component {
     );
   }
 }
+const LoginButton = () => (
+  <div>
 
+
+    {Auth.isUserAuthenticated() ? (
+      <FlatButton
+        containerElement={<Link to="/logout" />}
+        label="Sign out"
+      />
+
+  ) : (
+
+    <FlatButton
+      containerElement={<Link to="/login" />}
+      label="Sign in"
+    />
+  )}
+
+  </div>
+);
 App.propTypes = {
   children: PropTypes.object.isRequired,
 };

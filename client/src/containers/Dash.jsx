@@ -1,7 +1,7 @@
 import React from 'react';
 import Auth from '../modules/Auth';
 import Dashboard from '../components/Dash.jsx';
-
+import axios from 'axios';
 
 class DashboardPage extends React.Component {
 
@@ -15,20 +15,18 @@ class DashboardPage extends React.Component {
   }
 
   componentDidMount() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('get', '/api/dashboard');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // set the authorization HTTP header
-    xhr.setRequestHeader('Authorization', `bearer ${Auth.getToken()}`);
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        this.setState({
-          secretData: xhr.response.message,
-        });
-      }
+    axios({
+      method: 'get',
+      url: '/api/dashboard',
+      responseType: 'json',
+      headers: { Authorization: `bearer ${Auth.getToken()}` },
+
+    })
+    .then((response) => {
+      this.setState({
+        secretData: response.data.message,
+      });
     });
-    xhr.send();
   }
 
 
