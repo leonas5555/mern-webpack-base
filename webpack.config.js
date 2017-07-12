@@ -2,7 +2,9 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
+const extractSass = new ExtractTextPlugin({
+  filename: '[name].[contenthash].css',
+});
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   hash: true,
   template: './client/src/index.html',
@@ -16,25 +18,41 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
   entry: './client/src/index.js',
   output: {
-    path: path.resolve('./client/dist'),
+    path: path.resolve(__dirname, './client/dist'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [
       { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel-loader' },
-      {
+/*      {
+        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
         test: /\.css$/,
+      },*/
+      {
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
+          use: [{
+            loader: 'css-loader',
+          }, {
+            loader: 'sass-loader',
+          }],
           fallback: 'style-loader',
-          use: 'css-loader',
         }),
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
+          },
+        ],
       },
     ],
   },
-  plugins: [new ExtractTextPlugin({
-    filename: 'styles.css',
-    disable: false,
-    allChunks: true,
-  }), HtmlWebpackPluginConfig],
+  plugins: [extractSass, HtmlWebpackPluginConfig],
 };
 

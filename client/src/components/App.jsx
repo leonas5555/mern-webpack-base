@@ -32,7 +32,7 @@ export default class App extends React.Component {
           <MenuItem onTouchTap={this.handleOptionsButtonClick}>Menu Item 2</MenuItem>
         </Drawer>
         <AppBar
-          title="App"
+          title="Trainz App"
           onLeftIconButtonTouchTap={this.handleOptionsButtonClick}
           iconElementRight={<LoginButton />}
         />
