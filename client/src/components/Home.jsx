@@ -10,6 +10,7 @@ class HomePage extends React.Component {
 
     this.state = {
       trainzData: '',
+      nowDate: new Date(),
     };
   }
 
@@ -31,6 +32,7 @@ class HomePage extends React.Component {
     return (
 
       <Card className="container">
+        <div>{this.state.nowDate.toString()}</div>
         <CardTitle title="Trainz" subtitle="Trainz home page." />
         <TrainzList props={this.state.trainzData} />
       </Card>
