@@ -1,6 +1,6 @@
 # mern-webpack-base
 
-Learning by doing - project. Base MERN setup usable for any further development on this platform. 
+Learning by doing - project. Base MERN setup usable for further web app development on this platform. 
 
 Features:
 
